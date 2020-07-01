@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import { Scale } from "./Scale";
 import { Width } from "./Width";
+import { generateRGBValues } from "./utils/generateRGBValues";
 
 export const Huw = () => {
   const ref = useRef();
@@ -8,18 +9,6 @@ export const Huw = () => {
   let [pixel, setPixel] = useState(1);
   let [width, setWidth] = useState(256);
   const colorLength = 32768;
-
-  const getRGBList = () => {
-    const rgbCollection = [];
-    for (let r = 0; r < 32; r++) {
-      for (let g = 0; g < 32; g++) {
-        for (let b = 0; b < 32; b++) {
-          rgbCollection.push([r * 8, g * 8, b * 8]);
-        }
-      }
-    }
-    return rgbCollection;
-  };
 
   const mouseMoved = useCallback(
     (e) => {
@@ -39,7 +28,7 @@ export const Huw = () => {
   useEffect(() => {
     let canvas = ref.current;
     let ctx = canvas.getContext("2d");
-    const rgbList = getRGBList();
+    const rgbList = generateRGBValues();
     for (let y = 0; y < colorLength / width; y++) {
       for (let x = 0; x < width; x++) {
         // let i = y * width + x;
