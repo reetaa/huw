@@ -1,11 +1,12 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Scale } from "./Scale";
+import { Width } from "./Width";
 
 export const Huw = () => {
   const ref = useRef();
   let [color, setColor] = useState("");
   let [size, setSize] = useState(1);
-  const width = 32;
+  let [width, setWidth] = useState(32);
   const colorLength = 32768;
 
   const getRGBList = () => {
@@ -51,6 +52,7 @@ export const Huw = () => {
     <>
       <div style={{ position: "fixed" }}>
         <Scale setSize={setSize} size={size} />
+        <Width setWidth={setWidth} width={width} />
         {color && <h2 style={{ color: `${color}` }}>Color: {color}</h2>}
       </div>
       <canvas
