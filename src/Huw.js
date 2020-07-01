@@ -1,10 +1,13 @@
 import React, { useState, useRef, useEffect } from "react";
+import { Scale } from "./Scale";
 
 export const Huw = () => {
   const ref = useRef();
   let [color, setColor] = useState("");
-  const size = 25;
+  let [size, setSize] = useState(1);
   const width = 32;
+  const colorLength = 32768;
+
   const getRGBList = () => {
     const rgbCollection = [];
     for (let r = 0; r < 32; r++) {
@@ -17,39 +20,43 @@ export const Huw = () => {
     return rgbCollection;
   };
 
-  useEffect(() => {
+  const handleColor = (e) => {
     const rgbList = getRGBList();
+    let i = Math.floor(e.offsetY / size) * width + Math.floor(e.offsetX / size);
+    // There's a race condition where mousemove is called with coordinates outside the canvas
+    if (i < 0 || i > colorLength - 1) return;
+    const rgbValue = `rgb(${rgbList[i][0]},${rgbList[i][1]},${rgbList[i][2]})`;
+    setColor(rgbValue);
+  };
+
+  useEffect(() => {
     let canvas = ref.current;
     let ctx = canvas.getContext("2d");
+    const rgbList = getRGBList();
 
-    canvas.addEventListener("mousemove", (e) => {
-      let i =
-        Math.floor(e.offsetY / size) * width + Math.floor(e.offsetX / size);
-      // There's a race condition where mousemove is called with coordinates outside the canvas
-      if (i < 0 || i > 32767) {
-        return;
-      }
-      const rgbValue = `rgb(${rgbList[i][0]},${rgbList[i][1]},${rgbList[i][2]})`;
-      setColor(rgbValue);
-    });
-
-    for (let y = 0; y < 32768 / width; y++) {
+    for (let y = 0; y < colorLength / width; y++) {
       for (let x = 0; x < width; x++) {
         let i = y * width + x;
         ctx.fillStyle = `rgb(${rgbList[i][0]},${rgbList[i][1]},${rgbList[i][2]})`;
         ctx.fillRect(x * size, y * size, size, size);
       }
     }
+    canvas.addEventListener("mousemove", handleColor);
+
+    return () => {
+      canvas.removeEventListener("mousemove", handleColor);
+    };
   });
   return (
     <>
-      {color && (
-        <h2 style={{ position: "fixed", color: `${color}` }}>Color: {color}</h2>
-      )}
+      <div style={{ position: "fixed" }}>
+        <Scale setSize={setSize} size={size} />
+        {color && <h2 style={{ color: `${color}` }}>Color: {color}</h2>}
+      </div>
       <canvas
         ref={ref}
         width={width * size}
-        height={(size * 32768) / width}
+        height={(size * colorLength) / width}
       ></canvas>
     </>
   );
