@@ -1,15 +1,15 @@
 import React from "react";
 import { Button } from "./Button";
 
-export const Scale = ({ size, setSize }) => {
+export const Scale = ({ pixel, setPixel }) => {
   const increment = () => {
-    if (size < 25) {
-      setSize(size + 2);
+    if (pixel < 25) {
+      setPixel(pixel + 2);
     }
   };
   const decrement = () => {
-    if (size > 2) {
-      setSize(size - 2);
+    if (pixel > 2) {
+      setPixel(pixel - 2);
     }
   };
   return (
