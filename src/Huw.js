@@ -1,8 +1,21 @@
 import React, { Component } from "react";
+import styled from "styled-components";
 import { Scale } from "./Scale";
 import { Width } from "./Width";
 import { Canvas } from "./Canvas";
 import { generateRandomValues } from "./utils/generate";
+
+const HuwStyles = styled.div`
+  position: fixed;
+`;
+
+const H3Styles = styled.h3.attrs((props) => ({
+  style: {
+    color: props.color,
+    background: "rgba(255, 255, 255, 0.9)",
+    padding: "1em",
+  },
+}))``;
 
 export class Huw extends Component {
   state = { color: "", colors: [], scale: 3, width: 256 };
@@ -18,7 +31,7 @@ export class Huw extends Component {
   render() {
     return (
       <>
-        <div style={{ position: "fixed" }}>
+        <HuwStyles>
           <Scale
             setScale={(scale) => {
               this.setState({ scale: scale });
@@ -32,17 +45,11 @@ export class Huw extends Component {
             width={this.state.width}
           />
           {this.state.color && (
-            <h3
-              style={{
-                color: `${this.state.color}`,
-                background: `rgba(255, 255, 255, 0.9)`,
-                padding: "1em",
-              }}
-            >
+            <H3Styles color={`${this.state.color}`}>
               Color: {this.state.color}
-            </h3>
+            </H3Styles>
           )}
-        </div>
+        </HuwStyles>
         <Canvas
           width={this.state.width}
           scale={this.state.scale}
