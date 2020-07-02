@@ -1,13 +1,13 @@
-import { generateRGBValues } from "./generateRGBValues";
+import { generateLinearValues } from "./generate";
 
 describe("Generate RGB Values", () => {
   const valueLength = 32768;
-  const mockGenerateRGBValues = jest.fn(generateRGBValues);
-  mockGenerateRGBValues();
-  const value = mockGenerateRGBValues.mock.results[0].value;
+  const mockGenerateLinearValues = jest.fn(generateLinearValues);
+  mockGenerateLinearValues();
+  const value = mockGenerateLinearValues.mock.results[0].value;
 
   test("Generate RGB values is called", () => {
-    expect(mockGenerateRGBValues).toHaveBeenCalled();
+    expect(mockGenerateLinearValues).toHaveBeenCalled();
   });
 
   test("Value length is 32768", () => {
