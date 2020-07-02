@@ -14,6 +14,12 @@ describe("Generate RGB Values", () => {
     expect(value.length).toBe(valueLength);
   });
 
+  test("Values are unique", () => {
+    const randomSampleA = [...value[32000]].join("");
+    const randomSampleB = [...value[32001]].join("");
+    expect(randomSampleA).not.toMatch(randomSampleB);
+  });
+
   test("Value is calculated with 32 steps", () => {
     expect(valueLength % 32).toBe(0);
   });
