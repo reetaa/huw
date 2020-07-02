@@ -63,7 +63,7 @@ export class Canvas extends React.Component {
         height={
           (this.props.colors.length * this.props.scale) / this.props.width
         }
-      ></canvas>
+      />
     );
   }
 }
