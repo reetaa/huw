@@ -1,27 +1,25 @@
 import React, { Component } from "react";
-import styled from "styled-components";
 import { Scale } from "./Scale";
 import { Width } from "./Width";
 import { Canvas } from "./Canvas";
-import { generateRandomValues } from "./utils/generate";
-
-const HuwStyles = styled.div`
-  position: fixed;
-`;
-
-const H3Styles = styled.h3.attrs((props) => ({
-  style: {
-    color: props.color,
-    background: "rgba(255, 255, 255, 0.9)",
-    padding: "1em",
-  },
-}))``;
+import { Colors } from "./Colors";
+import { generateRandomValues, generateLinearValues } from "./utils/generate";
+import { HuwStyles, ColorStyles } from "./Styles";
 
 export class Huw extends Component {
-  state = { color: "", colors: [], scale: 3, width: 256 };
+  state = { color: "", colors: [], scale: 2, width: 256 };
 
   hover = (rgbValue) => {
     this.setState({ color: rgbValue });
+  };
+
+  setColors = (type) => {
+    if (type === "linear") {
+      this.setState({ colors: generateLinearValues() });
+    }
+    if (type === "random") {
+      this.setState({ colors: generateRandomValues() });
+    }
   };
 
   componentDidMount() {
@@ -32,6 +30,7 @@ export class Huw extends Component {
     return (
       <>
         <HuwStyles>
+          <Colors setColors={this.setColors} />
           <Scale
             setScale={(scale) => {
               this.setState({ scale: scale });
@@ -45,9 +44,9 @@ export class Huw extends Component {
             width={this.state.width}
           />
           {this.state.color && (
-            <H3Styles color={`${this.state.color}`}>
+            <ColorStyles color={`${this.state.color}`}>
               Color: {this.state.color}
-            </H3Styles>
+            </ColorStyles>
           )}
         </HuwStyles>
         <Canvas
