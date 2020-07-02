@@ -3,7 +3,11 @@ import { Scale } from "./Scale";
 import { Width } from "./Width";
 import { Canvas } from "./Canvas";
 import { Colors } from "./Colors";
-import { generateRandomValues, generateLinearValues } from "../utils/generate";
+import {
+  sortByL,
+  generateRandomValues,
+  generateLinearValues,
+} from "../utils/generate";
 import { HuwStyles, ColorStyles } from "./Styles";
 
 export class Huw extends Component {
@@ -15,15 +19,15 @@ export class Huw extends Component {
 
   setColors = (type) => {
     if (type === "linear") {
-      this.setState({ colors: generateLinearValues() });
+      this.setState({ colors: sortByL(generateLinearValues()) });
     }
     if (type === "random") {
-      this.setState({ colors: generateRandomValues() });
+      this.setState({ colors: sortByL(generateRandomValues()) });
     }
   };
 
   componentDidMount() {
-    this.setState({ colors: generateRandomValues() });
+    this.setState({ colors: sortByL(generateLinearValues()) });
   }
 
   render() {

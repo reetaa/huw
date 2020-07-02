@@ -1,3 +1,19 @@
+# Overview
+This is a react app which uses canvas to render 32,768 unique colors. There are two algorighms to generate the color occurances in the image, random and linear, sorted by luminescence. It has functionalities to Scale and change Width of the image. Also, you can hover on to the image pixels to see RGB values.
+ 
+It had functional components to start with. However, there were unexpected re-renders happening. To address that, I wrapped it with useCallback at first and specified dependencies. Still it did not solve the problem. Hence, I changed it to class component for lifecycle clarity and broke down the components which solved the performance issue and unwanted re-renders.
+
+I have written unit test for utilities functions. I have kept the file structure simple as this is a small project.
+
+Additional Ideas for algoriths could be:
+- Arrange the colors by hue
+- Arrange the colors by saturation
+- Arrange the colors by lightness (done)
+
+
+# Limitations
+There is a known bug when you try to see the rendered color value. When you leave an edge of the image, value showed is `rgb(0,0,0), couldn't figure out why.
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
